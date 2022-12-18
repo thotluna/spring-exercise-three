@@ -2,8 +2,8 @@ package me.eladiofeijoo.datajpa;
 
 import me.eladiofeijoo.datajpa.entities.Book;
 import me.eladiofeijoo.datajpa.entities.Car;
-import me.eladiofeijoo.datajpa.repositories.BooksRepository;
 import me.eladiofeijoo.datajpa.repositories.CarsRepository;
+import me.eladiofeijoo.datajpa.services.BooksServices;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -31,17 +31,18 @@ public class DataJpaApplication {
 			System.out.println(car);
 		}
 
-		BooksRepository booksRepository = context.getBean(BooksRepository.class);
-		booksRepository.deleteAll();
-		System.out.println("Item in Books " + booksRepository.count());
-
+		BooksServices services = context.getBean(BooksServices.class);
 		Book refactoring = new Book(null, "Refactoring: Improving the Design of Existing Code", "Martin Fowler", 432,
 				32.39, LocalDate.of(2018,11, 28), true);
-		booksRepository.save(refactoring);
-		System.out.println("Item in Books " + booksRepository.count());
-		for (Book book : booksRepository.findAll()){
+		Book uml = new Book(null, "UML Distilled: A Brief Guide to the Standard Object Modeling Language", "Martin " +
+				"Fowler", 191,32.39, LocalDate.of(2018,8, 30), true);
+		services.deleteAll();
+		services.save(refactoring);
+		services.save(uml);
+		for (Book book : services.findAll()){
 			System.out.println(book);
 		}
+
 	}
 
 }
