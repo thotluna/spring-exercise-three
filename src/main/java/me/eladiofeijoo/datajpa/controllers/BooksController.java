@@ -33,6 +33,14 @@ public class BooksController {
         return services.save(book);
     }
 
+    @PutMapping("/v1/book/{id}")
+    public Book update(@PathVariable Long id, @RequestBody Book book){
+        if(id != book.getId()) throw  new BookNotFoundException(id);
+        Book bookOld = services.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+        book.setId(id);
+        return services.update(book);
+    }
+
     @DeleteMapping("/v1/book/{id}")
     public void delete(@PathVariable Long id){
         assert id != null;

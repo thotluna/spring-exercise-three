@@ -28,6 +28,15 @@ public class BooksServices {
         return repository.save(book);
     }
 
+    public Book update(Book book){
+        try{
+            return repository.save(book);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
     public void delete(Long id){
         try{
             repository.deleteById(id);
