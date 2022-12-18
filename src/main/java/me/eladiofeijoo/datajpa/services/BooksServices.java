@@ -1,10 +1,12 @@
 package me.eladiofeijoo.datajpa.services;
 
 import me.eladiofeijoo.datajpa.entities.Book;
+import me.eladiofeijoo.datajpa.exceptions.BookNotFoundException;
 import me.eladiofeijoo.datajpa.repositories.BooksRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BooksServices {
@@ -18,11 +20,27 @@ public class BooksServices {
         return repository.findAll();
     }
 
-    public void save(Book book){
-        repository.save(book);
+    public Optional<Book> findById(Long id) throws BookNotFoundException {
+         return  repository.findById(id);
+    }
+
+    public Book save(Book book){
+        return repository.save(book);
+    }
+
+    public void delete(Long id){
+        try{
+            repository.deleteById(id);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void deleteAll(){
-        repository.deleteAll();
+        try{
+            repository.deleteAll();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }
